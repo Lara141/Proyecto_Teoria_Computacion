@@ -60,21 +60,21 @@ def tokenizar(codigo_fuente):
 # 4. ¡Prueba de fuego!
 if __name__ == '__main__':
     codigo_prueba = """
-SI (humedad < 30 Y temperatura 25) ENTONCES BOMBA_1 = APAGADO;
+SI (humedad < 30 Y temperatura =>25) ENTONCES BOMBA_1 = APAGADO;
 """
 
-    try:
-        tokens = tokenizar(codigo_prueba)
+try:
+    tokens = tokenizar(codigo_prueba)
 
-        print("¡Análisis Léxico Exitoso!\nTokens encontrados:")
-        for token in tokens:
-            print(token)
+    print("Tokens encontrados:")
+    for token in tokens:
+        print(token)
 
-        parser = Parser(tokens)
-        parser.parsear()
+    parser = Parser(tokens)
+    parser.parsear()
 
-        print("\n¡Análisis Sintáctico Exitoso!")
+    print("\n✓ La cadena pertenece al lenguaje.")
 
-    except RuntimeError as error:
-        print(error)
-from parser import Parser     
+except RuntimeError as error:
+    print(f"\n✗ {error}")
+   
