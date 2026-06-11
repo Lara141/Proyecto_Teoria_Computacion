@@ -57,4 +57,3 @@ def tokenizar(codigo_fuente):
         
     return tokens
 
-# 4. ¡Prueba de fuego!
