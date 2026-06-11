@@ -50,10 +50,10 @@ def tokenizar(codigo_fuente):
             linea_actual += 1
             continue
         elif tipo == 'DESCONOCIDO':
-            raise RuntimeError(f"Error Léxico: Carácter no válido '{valor}' en la línea {linea_actual}")
+         return tokens, f"Error Léxico: Carácter no válido '{valor}' en la línea {linea_actual}"
             
         # Si es un token válido, lo agregamos a nuestra lista
         tokens.append(Token(tipo, valor, linea_actual))
         
-    return tokens
+    return tokens, None
 

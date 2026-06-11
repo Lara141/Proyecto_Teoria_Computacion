@@ -2,20 +2,23 @@ from lexer import tokenizar
 from parser import Parser
 
 codigo_prueba = """
-SI (humedad < 3 Y temperatura >= 4) ENTONCES BOMBA_1 = APAGADO;
+SI (humedad < 3 Y temperatura >= 212) ENTONCES BOMBA_1 = APAGADO;
 """
 
-try:
-    tokens = tokenizar(codigo_prueba)
+tokens, error_lexico = tokenizar(codigo_prueba)
 
-    print("Tokens encontrados:")
-    for token in tokens:
-        print(token)
+print("Tokens encontrados:")
+for token in tokens:
+    print(token)
 
-    parser = Parser(tokens)
-    parser.parsear()
+if error_lexico:
+    print(f"\n✗ {error_lexico}")
+else:
+    try:
+        parser = Parser(tokens)
+        parser.parsear()
 
-    print("\n✓ La cadena pertenece al lenguaje.")
+        print("\n✓ La cadena pertenece al lenguaje.")
 
-except RuntimeError as error:
-    print(f"\n✗ {error}")
+    except RuntimeError as error:
+        print(f"\n✗ {error}")
