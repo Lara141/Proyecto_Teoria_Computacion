@@ -1,4 +1,5 @@
 import re
+from parser import Parser
 
 # 1. Definimos la estructura de un Token
 class Token:
@@ -58,15 +59,22 @@ def tokenizar(codigo_fuente):
 
 # 4. ¡Prueba de fuego!
 if __name__ == '__main__':
-    # Código de prueba escrito en tu Lenguaje de Configuración de Riego
     codigo_prueba = """
-    SI (humedad < 30 Y temperatura >= 25) ENTONCES BOMBA_1 = ENCENDIDO;
-    """
-    
+SI (humedad < 30 Y temperatura 25) ENTONCES BOMBA_1 = APAGADO;
+"""
+
     try:
-        resultado = tokenizar(codigo_prueba)
+        tokens = tokenizar(codigo_prueba)
+
         print("¡Análisis Léxico Exitoso!\nTokens encontrados:")
-        for token in resultado:
+        for token in tokens:
             print(token)
+
+        parser = Parser(tokens)
+        parser.parsear()
+
+        print("\n¡Análisis Sintáctico Exitoso!")
+
     except RuntimeError as error:
         print(error)
+from parser import Parser     
