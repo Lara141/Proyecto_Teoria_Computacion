@@ -6,18 +6,32 @@ import re
 # ==========================
 
 class Token:
+    """ Representa un token identificado por el lexer.
+    Un token es la unidad léxica más pequeña del lenguaje LCR,
+    que incluye información sobre su tipo, valor y ubicación en el código.
+     Atributos:
+        tipo (str): Categoría del token (ej: 'NUMERO', 'SENSOR', 'SI', 'OP_LOGICO').
+        valor (str): El contenido literal del token (ej: '50', 'humedad', 'SI').
+        linea (int): Número de línea donde aparece el token en el código fuente.
+    """
     def __init__(self, tipo, valor, linea):
+
         self.tipo = tipo
         self.valor = valor
         self.linea = linea
 
+
+
     def __repr__(self):
+        """Retorna una representación legible del token."""
         return f"Token({self.tipo}, '{self.valor}', Línea: {self.linea})"
+
 
 
 # ==========================
 # REGLAS DEL LEXER
 # ==========================
+
 
 REGLAS_TOKENS = [
 
@@ -77,6 +91,8 @@ REGLAS_TOKENS = [
 
 def tokenizar(codigo_fuente):
 
+
+
     tokens = []
     linea_actual = 1
 
@@ -102,6 +118,7 @@ def tokenizar(codigo_fuente):
         elif tipo == 'SALTO_LINEA':
             linea_actual += 1
             continue
+
 
         # Error léxico
         elif tipo == 'DESCONOCIDO':

@@ -1,6 +1,5 @@
 from ast_lcr import *
 
-
 class Parser:
 
     def __init__(self, tokens):

@@ -1,6 +1,7 @@
 from lexer import tokenizar
 from parser import Parser
 
+# Ejemplo de código en el lenguaje LCR
 codigo_prueba = """
 si la humedad es menor a 30
 o la temperatura es mayor a 35
