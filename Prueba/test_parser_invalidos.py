@@ -7,9 +7,9 @@ from lexer import tokenizar
 from parser import Parser
 
 
-# ==========================================
+
 # CASOS DE PRUEBA SINTÁCTICOS INVÁLIDOS
-# ==========================================
+
 
 casos_prueba = [
 
@@ -40,9 +40,9 @@ casos_prueba = [
 ]
 
 
-# ==========================================
+
 # MOTOR DE PRUEBAS
-# ==========================================
+
 
 print("=" * 70)
 print("CASOS DE PRUEBA DEL ANALIZADOR SINTÁCTICO (INVÁLIDOS)")

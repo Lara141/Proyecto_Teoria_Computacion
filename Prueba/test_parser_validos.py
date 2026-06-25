@@ -5,9 +5,9 @@ sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 from lexer import tokenizar
 from parser import Parser
-# ==========================================
+
 # CASOS DE PRUEBA SINTÁCTICOS VÁLIDOS
-# ==========================================
+
 
 casos_prueba = [
 
@@ -32,31 +32,31 @@ casos_prueba = [
     {
         "id": 4,
         "descripcion": "Regla de interrupción manual",
-        "codigo": "si la interrupcion es del operador entonces detener bomba de agua"
+        "codigo": "si la interrupcion operador entonces detener bomba de agua"
     },
 
     {
     "id": 5,
     "descripcion": "Activación manual de bomba de agua",
-    "codigo": "si la interrupcion es del operador entonces prender bomba de agua 1"
+    "codigo": "si la temperatura es menor a 20 entonces apagar bomba de agua 1"
     },
 
 {
     "id": 6,
-    "descripcion": "Desactivación manual del sistema térmico",
-    "codigo": "si la interrupcion es del operador entonces detener sistema termico"
+    "descripcion": "Desactivación automatica del sistema térmico",
+    "codigo": "si la humedad es mayor a 42 entonces detener bomba de agua"
 },
 
 {
     "id": 7,
-    "descripcion": "Activación manual de alarma sonora",
-    "codigo": "si la interrupcion es del operador entonces prender alarma sonora"
+    "descripcion": "Activación manual del notificador visual",
+    "codigo": "si interrupcion operador entonces prender notificador visual"
 },
 
 {
     "id": 8,
-    "descripcion": "Activación manual del notificador visual",
-    "codigo": "si la interrupcion es del operador entonces prender notificador visual"
+    "descripcion": "Activación manual de alarma sonora", 
+    "codigo": "si la interrupcion es del operador entonces prender alarma sonora"
 },
 
 ]
