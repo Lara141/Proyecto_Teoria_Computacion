@@ -41,7 +41,7 @@ REGLAS_TOKENS = [
     ('O', r'\bo\b'),
 
     # ---------- Condición especial ----------
-    ('INTERRUPCION_OPERADOR', r'\binterrupcion operador\b'),
+    ('INTERRUPCION_OPERADOR',r'\binterrupcion( es)?( del)? operador\b'),
 
     # ---------- Variables ----------
     ('VARIABLE_CLIMATICA', r'\b(temperatura|humedad)\b'),

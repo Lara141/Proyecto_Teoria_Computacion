@@ -32,31 +32,31 @@ casos_prueba = [
     {
         "id": 4,
         "descripcion": "Regla de interrupción manual",
-        "codigo": "si interrupcion operador entonces detener bomba de agua"
+        "codigo": "si la interrupcion es del operador entonces detener bomba de agua"
     },
 
     {
     "id": 5,
     "descripcion": "Activación manual de bomba de agua",
-    "codigo": "si interrupcion operador entonces prender bomba de agua 1"
+    "codigo": "si la interrupcion es del operador entonces prender bomba de agua 1"
     },
 
 {
     "id": 6,
     "descripcion": "Desactivación manual del sistema térmico",
-    "codigo": "si interrupcion operador entonces detener sistema termico"
+    "codigo": "si la interrupcion es del operador entonces detener sistema termico"
 },
 
 {
     "id": 7,
     "descripcion": "Activación manual de alarma sonora",
-    "codigo": "si interrupcion operador entonces prender alarma sonora"
+    "codigo": "si la interrupcion es del operador entonces prender alarma sonora"
 },
 
 {
     "id": 8,
     "descripcion": "Activación manual del notificador visual",
-    "codigo": "si interrupcion operador entonces prender notificador visual"
+    "codigo": "si la interrupcion es del operador entonces prender notificador visual"
 },
 
 ]
