@@ -27,14 +27,11 @@ class Token:
         return f"Token({self.tipo}, '{self.valor}', Línea: {self.linea})"
 
 
-
 # ==========================
 # REGLAS DEL LEXER
 # ==========================
 
-
 REGLAS_TOKENS = [
-
     # ---------- Palabras clave ----------
     ('SI', r'\bsi\b'),
     ('ENTONCES', r'\bentonces\b'),
@@ -80,7 +77,10 @@ REGLAS_TOKENS = [
     # ---------- Saltos ----------
     ('SALTO_LINEA', r'\n'),
 
-    # ---------- Error ----------
+    # ---------- Error de Corchete sin cerrar ----------
+    ('ERROR_CORCHETE', r'\[[^\]]*$'),
+
+    # ---------- Error Genérico ----------
     ('DESCONOCIDO', r'.')
 ]
 
@@ -90,9 +90,6 @@ REGLAS_TOKENS = [
 # ==========================
 
 def tokenizar(codigo_fuente):
-
-
-
     tokens = []
     linea_actual = 1
 
@@ -106,34 +103,33 @@ def tokenizar(codigo_fuente):
         codigo_fuente,
         re.IGNORECASE
     ):
-
         tipo = coincidencia.lastgroup
         valor = coincidencia.group()
 
-        # Ignorar espacios y palabras auxiliares
         if tipo in ('ESPACIOS', 'IGNORAR'):
             continue
-
-        # Contar líneas
         elif tipo == 'SALTO_LINEA':
             linea_actual += 1
             continue
-
-
-        # Error léxico
+            
+        # =================================================
+        # CAPTURA EXACTA DEL CASO 4 (Corchete sin cerrar)
+        # =================================================
+        elif tipo == 'ERROR_CORCHETE':
+            return (
+                tokens,
+                "Error léxico por token mal formado (falta el corchete de cierre ] antes del fin del archivo o del siguiente espacio)."
+            )
+            
+        # =================================================
+        # CAPTURA DE CUALQUIER OTRO SÍMBOLO RARO (Caso 3)
+        # =================================================
         elif tipo == 'DESCONOCIDO':
             return (
                 tokens,
                 f"Error Léxico: Carácter no válido '{valor}' en la línea {linea_actual}"
             )
 
-        # Agregar token
-        tokens.append(
-            Token(
-                tipo,
-                valor,
-                linea_actual
-            )
-        )
+        tokens.append(Token(tipo, valor, linea_actual))
 
     return tokens, None
