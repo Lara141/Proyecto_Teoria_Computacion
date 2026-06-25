@@ -1,59 +1,122 @@
 import re
 
 
-# 1. Definimos la estructura de un Token
+# ==========================
+# ESTRUCTURA DEL TOKEN
+# ==========================
+
 class Token:
     def __init__(self, tipo, valor, linea):
-        self.tipo = tipo      # Ejemplo: 'NUMERO', 'SENSOR', 'SI'
-        self.valor = valor    # Ejemplo: '50', 'humedad', 'SI'
-        self.linea = linea    # Útil para reportar errores más adelante
+        self.tipo = tipo
+        self.valor = valor
+        self.linea = linea
 
     def __repr__(self):
         return f"Token({self.tipo}, '{self.valor}', Línea: {self.linea})"
 
-# 2. Definimos las reglas de nuestro lenguaje LCR usando Expresiones Regulares
-# ¡El orden importa! Las reglas más específicas van primero.
+
+# ==========================
+# REGLAS DEL LEXER
+# ==========================
+
 REGLAS_TOKENS = [
-    ('SI',             r'\bSI\b'),
-    ('ENTONCES',       r'\bENTONCES\b'),
-    ('SENSOR',         r'\b(humedad|temperatura)\b'),
-    ('ACTUADOR',       r'\b(BOMBA_1|BOMBA_2)\b'),
-    ('ESTADO',         r'\b(ENCENDIDO|APAGADO)\b'),
-    ('OP_LOGICO',      r'\b(Y|O)\b'),
-    ('NUMERO',         r'\d+'),                     # Uno o más dígitos numéricos
-    ('OP_RELACIONAL',  r'==|!=|>=|<=|<|>'),
-    ('ASIGNACION',     r'='),
-    ('PUNTO_Y_COMA',   r';'),
-    ('PAREN_IZQ',      r'\('),
-    ('PAREN_DER',      r'\)'),
-    ('ESPACIOS',       r'[ \t]+'),                  # Espacios y tabulaciones (los vamos a ignorar)
-    ('SALTO_LINEA',    r'\n'),                      # Para llevar la cuenta de las líneas
-    ('DESCONOCIDO',    r'.'),                       # Cualquier otro carácter (generará error)
+
+    # ---------- Palabras clave ----------
+    ('SI', r'\bsi\b'),
+    ('ENTONCES', r'\bentonces\b'),
+
+    # ---------- Operadores lógicos ----------
+    ('Y', r'\by\b'),
+    ('O', r'\bo\b'),
+
+    # ---------- Condición especial ----------
+    ('INTERRUPCION_OPERADOR', r'\binterrupcion operador\b'),
+
+    # ---------- Variables ----------
+    ('VARIABLE_CLIMATICA', r'\b(temperatura|humedad)\b'),
+    ('SENSOR_MOVIMIENTO', r'\bmovimiento\b'),
+    ('TEMPORIZADOR', r'\btemporizador\b'),
+    ('ESTADO_SISTEMA', r'\bestado\b'),
+
+    # ---------- Relaciones ----------
+    ('SUPERIOR_A', r'\bmayor a\b'),
+    ('INFERIOR_A', r'\bmenor a\b'),
+    ('EQUIVALENTE_A', r'\bigual a\b'),
+    ('DIFERENTE_DE', r'\bdistinto de\b'),
+
+    # ---------- Valores ----------
+    ('NUMERO', r'\d+'),
+
+    # ---------- Acciones ----------
+    ('PRENDER_ACCION', r'\b(prender|activar)\b'),
+    ('DETENER_ACCION', r'\b(detener|apagar)\b'),
+
+    # ---------- Actuadores ----------
+    ('BOMBA_AGUA', r'\bbomba de agua\b'),
+    ('SISTEMA_TERMICO', r'\bsistema termico\b'),
+    ('NOTIFICADOR_VISUAL', r'\bnotificador visual\b'),
+    ('ALARMA_SONORA', r'\balarma sonora\b'),
+
+    # ---------- Palabras que no aportan significado ----------
+    ('IGNORAR', r'\b(el|la|los|las|es|un|una)\b'),
+
+    # ---------- Espacios ----------
+    ('ESPACIOS', r'[ \t]+'),
+
+    # ---------- Saltos ----------
+    ('SALTO_LINEA', r'\n'),
+
+    # ---------- Error ----------
+    ('DESCONOCIDO', r'.')
 ]
 
-# 3. Función principal del Lexer
+
+# ==========================
+# ANALIZADOR LÉXICO
+# ==========================
+
 def tokenizar(codigo_fuente):
+
     tokens = []
     linea_actual = 1
-    
-    # Unimos todas las reglas en una sola gran expresión regular
-    patron_general = '|'.join(f'(?P<{nombre}>{patron})' for nombre, patron in REGLAS_TOKENS)
-    
-    # Escaneamos el texto buscando coincidencias
-    for coincidencia in re.finditer(patron_general, codigo_fuente):
+
+    patron_general = '|'.join(
+        f'(?P<{nombre}>{patron})'
+        for nombre, patron in REGLAS_TOKENS
+    )
+
+    for coincidencia in re.finditer(
+        patron_general,
+        codigo_fuente,
+        re.IGNORECASE
+    ):
+
         tipo = coincidencia.lastgroup
         valor = coincidencia.group()
-        
-        if tipo == 'ESPACIOS':
-            continue # Ignoramos los espacios en blanco
+
+        # Ignorar espacios y palabras auxiliares
+        if tipo in ('ESPACIOS', 'IGNORAR'):
+            continue
+
+        # Contar líneas
         elif tipo == 'SALTO_LINEA':
             linea_actual += 1
             continue
-        elif tipo == 'DESCONOCIDO':
-         return tokens, f"Error Léxico: Carácter no válido '{valor}' en la línea {linea_actual}"
-            
-        # Si es un token válido, lo agregamos a nuestra lista
-        tokens.append(Token(tipo, valor, linea_actual))
-        
-    return tokens, None
 
+        # Error léxico
+        elif tipo == 'DESCONOCIDO':
+            return (
+                tokens,
+                f"Error Léxico: Carácter no válido '{valor}' en la línea {linea_actual}"
+            )
+
+        # Agregar token
+        tokens.append(
+            Token(
+                tipo,
+                valor,
+                linea_actual
+            )
+        )
+
+    return tokens, None
