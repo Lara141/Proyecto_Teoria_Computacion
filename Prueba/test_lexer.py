@@ -11,14 +11,14 @@ casos_prueba = [
         "codigo": "si la temperatura es mayor a 30 entonces activar sistema termico"
     },
     {
-        "id": 2,
-        "descripcion": "Interrupción directa y ID opcional numérico",
-        "codigo": "si interrupcion operador entonces detener bomba de agua 1"
-    },
-    {
-        "id": 3,
+       "id": 2,
         "descripcion": "Error léxico por carácter inválido (@)",
         "codigo": "si movimiento @ entonces"
+    },
+    {
+         "id": 3,
+        "descripcion": "Interrupción directa y ID opcional numérico",
+        "codigo": "si interrupcion operador entonces detener bomba de agua 1"
     },
     {
         "id": 4,
