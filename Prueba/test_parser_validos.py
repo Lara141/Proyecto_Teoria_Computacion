@@ -32,7 +32,7 @@ casos_prueba = [
     {
         "id": 4,
         "descripcion": "Regla de interrupción manual",
-        "codigo": "si la interrupcion operador entonces detener bomba de agua"
+        "codigo": "si la interrupcion es del operador entonces detener bomba de agua"
     },
 
     {
@@ -50,7 +50,7 @@ casos_prueba = [
 {
     "id": 7,
     "descripcion": "Activación manual del notificador visual",
-    "codigo": "si interrupcion operador entonces prender notificador visual"
+    "codigo": "si la interrupcion es del operador entonces prender notificador visual"
 },
 
 {

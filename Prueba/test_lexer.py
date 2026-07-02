@@ -13,7 +13,7 @@ casos_prueba = [
     {
        "id": 2,
         "descripcion": "Error léxico por carácter inválido (@)",
-        "codigo": "si movimiento @ entonces"
+        "codigo": "si temperatura @ entonces"
     },
     {
          "id": 3,

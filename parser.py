@@ -304,6 +304,6 @@ class Parser:
             ).valor
 
         return (
-            entidad,
-            identificador
+            entidad ,
+            identificador 
         )
